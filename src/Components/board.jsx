@@ -31,10 +31,11 @@ export default function Board() {
     } else if (board.every((cell) => cell !== null)) {
       setGameResult("It's a Draw !");
     }
-  }; 
-  const reload = ()=>{ 
-    window.location.reload(); 
-  }
+  };
+  const reload = () => {
+    setBoard(Array(9).fill(null));
+    setGameResult("");
+  };
   const boardLogic = (index) => {
     if (board[index] || gameResult) return;
     const newBoard = [...board];
@@ -52,21 +53,19 @@ export default function Board() {
     className = "text-2xl sm:text-3xl text-sky-700";
   }
   return (
-    <div>
-      <div className="w-[100%] h-[70%] flex justify-center">
-        <div className="my-[50px] grid grid-cols-3 w-[80%] md:w-[50%]">
+    <div className="my-10 sm:my-0">
+      <div className="w-full h-[70%] flex justify-center">
+        <div className="my-7 grid grid-cols-3 w-[80%] md:w-[50%] gap-4">
           {board.map((item, index) => (
             <div
               onClick={() => boardLogic(index)}
-              className="border-[3px] p-[25px] h-[120px] md:h-[180px] col"
+              className="border-[4px] p-[20px] h-[100px] sm:h-[100px] md:h-[190px] flex items-center justify-center cursor-pointer transition-transform transform hover:scale-105 hover:shadow-lg"
               key={index}
             >
               <p
-                className={
-                  item === "X"
-                    ? "text-3xl text-[#98e66c]"
-                    : "text-3xl text-red-600"
-                }
+                className={`text-4xl font-semibold ${
+                  item === "X" ? "text-[#98e66c] font-bold" : "text-red-600"
+                }`}
               >
                 {item}
               </p>
@@ -75,10 +74,13 @@ export default function Board() {
         </div>
       </div>
       {gameResult.trim() !== "" && (
-        <div>
-          <h2 className={className}>{gameResult}</h2>
-          <button className=" my-[30px] text-xl sm:text-2xl border-[2px] border-[#98e66c] p-3 rounded-lg hover:bg-[#98e66c] hover:text-black transition" 
-          onClick={reload}
+        <div className="text-center my-10 sm:my-0">
+          <h2 className="text-3xl font-bold text-[#374151] mb-1">
+            {gameResult}
+          </h2>
+          <button
+            className="my-2 sm:my-4 text-lg sm:text-xl border-2 border-[#98e66c] p-3  rounded-lg hover:bg-[#98e66c] hover:text-black transition ease-in-out duration-300 transform hover:scale-105"
+            onClick={reload}
           >
             Replay
           </button>
